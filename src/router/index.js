@@ -5,7 +5,6 @@ import SignUpView from '@/views/SignUpView.vue';
 import NoteView from '@/views/NoteView.vue';
 import NoteNewView from '@/views/NoteNewView.vue';
 import NoteEditView from '@/views/NoteEditView.vue';
-import TestView from '@/views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
