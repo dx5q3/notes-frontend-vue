@@ -3,20 +3,6 @@ import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
 import NoteForm from '@/components/NoteForm.vue';
 import axios from 'axios';
-
-const route = useRoute();
-const id = route.params.id;
-
-const note = ref({});
-
-onMounted(async () => {
-    try {
-        const response = await axios.get(`/api/notes/${id}`);
-        note.value = response.data;
-    } catch (error) {
-        console.error('Error fetching job', error);
-    }
-});
 </script>
 
 <template>
@@ -27,7 +13,7 @@ onMounted(async () => {
                 Edit note
             </h1>
 
-            <NoteForm :note="note" />
+            <NoteForm />
         </div>
     </main>
 </template>
