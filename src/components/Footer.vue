@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
     <footer class="bg-white dark:bg-gray-800">
         <div

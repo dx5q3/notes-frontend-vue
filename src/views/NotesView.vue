@@ -3,7 +3,7 @@ import NoteCard from '@/components/NoteCard.vue';
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
-const notes = ref([])
+const notes = ref([]);
 
 onMounted(async () => {
     try {

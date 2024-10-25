@@ -9,7 +9,7 @@ import NoteForm from '@/components/NoteForm.vue';
                 class="mt-4 text-2xl font-semibold tracking-wide text-center text-gray-800 capitalize md:text-3xl dark:text-white">
                 New note
             </h1>
-            <NoteForm />
+            <NoteForm :is-edit-page="false"/>
         </div>
     </main>
 </template>

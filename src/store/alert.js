@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import {ref, computed, watch} from 'vue';
+import { ref, computed, watch } from 'vue';
 
 export const useAlertStore = defineStore('alert', () => {
     const type = ref('');
@@ -12,12 +12,12 @@ export const useAlertStore = defineStore('alert', () => {
     }
     const clearAlert = () => {
         type.value = '';
-        message.value = ''; 
+        message.value = '';
     };
-    
-    watch(message, ()=>{
+
+    watch(message, () => {
         setTimeout(clearAlert, 10000);
     });
 
-    return { type, message, getAlert, raiseAlert,clearAlert }
+    return { type, message, getAlert, raiseAlert, clearAlert }
 });

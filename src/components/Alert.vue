@@ -1,5 +1,6 @@
 <script setup>
 import { useAlertStore } from '@/store/alert';
+
 const alertStore = useAlertStore();
 </script>
 

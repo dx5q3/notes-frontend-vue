@@ -1,41 +1,31 @@
 <script setup>
-import { onBeforeUpdate, onMounted, ref, computed } from 'vue';
+import { defineProps } from 'vue';
 import { useAlertStore } from '@/store/alert';
-import { useRoute } from 'vue-router';
-import axios from 'axios';
 
-const route = useRoute();
-const id = route.params.id;
-const note = ref({ text: "", title: "" });
-const isEditPage = ref(true);
+import axios from 'axios';
 
 const { raiseAlert } = useAlertStore();
 
-onMounted(async () => {
-
-    if (!route.fullPath.includes('edit')) {
-        isEditPage.value = false;
-    }
-
-    if (isEditPage) {
-        try {
-            const response = await axios.get(`/api/notes/${id}`);
-            note.value = response.data;
-        } catch (error) {
-            console.error('Error fetching job', error);
+const props = defineProps({
+    note: {
+        type: Object,
+        default: {
+            title: "",
+            text: ""
         }
-    }
+    },
+    isEditPage: Boolean
 });
 
 const saveNote = () => {
-    isEditPage.value ? editNote() : newNote();
+    props.isEditPage ? editNote() : newNote();
 };
 
 const newNote = async () => {
     try {
         await axios.post('/api/notes', {
-            'text': note.value.text,
-            'title': note.value.title
+            'text': props.note.text,
+            'title': props.note.title
         });
         raiseAlert("success", "Note added successfully.");
     } catch (error) {
@@ -45,18 +35,23 @@ const newNote = async () => {
 
 const editNote = async () => {
     try {
-        await axios.put('/api/note/' + id, {
-            'text': note.value.text, 
-            'title': note.value.title
+        await axios.patch('/api/notes/' + props.note.id, {
+            'text': props.note.text,
+            'title': props.note.title
         });
-        raiseAlert("success", "Note added successfully.");
+        raiseAlert("success", "Note updated successfully.");
     } catch (error) {
         raiseAlert("error", error.message);
     }
 }
 
 const deleteNote = async () => {
-    console.log("delete");
+    try {
+        await axios.delete('/api/notes/' + props.note.id);
+        raiseAlert("success", "Note deleted successfully.");
+    } catch (error) {
+        raiseAlert("error", error.message);
+    }
 };
 </script>
 
@@ -68,7 +63,7 @@ const deleteNote = async () => {
                 <input type="text" placeholder="My beatiful note" v-model="note.title"
                     class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
             </div>
-            {{ note.title }}
+
             <div class="mt-6">
                 <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Text</label>
                 <textarea placeholder="Lorem ipsum..." v-model="note.text"

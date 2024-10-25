@@ -1,23 +1,25 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { useAlertStore } from '@/store/alert';
 import axios from 'axios';
 
 const route = useRoute();
-const id = route.params.id;
+const router = useRouter();
 
+const { raiseAlert } = useAlertStore();
+
+const id = route.params.id;
 const note = ref({});
 
 onMounted(async () => {
     try {
         const response = await axios.get(`/api/notes/${id}`);
         note.value = response.data;
-        console.log(response);
-
     } catch (error) {
-        console.error('Error fetching job', error);
+        raiseAlert('error', error.message);
+        router.push('/');
     }
-
 });
 
 const convertDate = (date) => {

@@ -36,11 +36,6 @@ const router = createRouter({
       path: "/signup",
       name: "signUp",
       component: SignUpView
-    },
-    {
-      path: "/test",
-      name: "test",
-      component: TestView
     }
   ]
 });

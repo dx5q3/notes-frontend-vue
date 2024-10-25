@@ -1,8 +1,29 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useAlertStore } from '@/store/alert';
 import NoteForm from '@/components/NoteForm.vue';
 import axios from 'axios';
+
+const route = useRoute();
+const router = useRouter();
+
+const { raiseAlert } = useAlertStore();
+
+const note = ref({});
+
+const id = route.params.id;
+
+onMounted(async () => {
+    try {
+        const response = await axios.get(`/api/notes/${id}`);
+        note.value = response.data;
+    } catch (error) {
+        router.push('/')
+        raiseAlert('error', error.message);
+    }
+
+});
 </script>
 
 <template>
@@ -13,7 +34,7 @@ import axios from 'axios';
                 Edit note
             </h1>
 
-            <NoteForm />
+            <NoteForm :note="note" :is-edit-page="true" />
         </div>
     </main>
 </template>
