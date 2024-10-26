@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
+import Alert from './Alert.vue';
 
 const authStore = useAuthStore();
 
@@ -40,23 +41,26 @@ console.log(authStore)
                 class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center">
                 <div class="flex flex-col md:flex-row md:mx-6">
                     <RouterLink v-if="isLoggedIn"
-                        class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                        class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                         to="/">Notes</RouterLink>
                     <RouterLink v-if="isLoggedIn"
-                        class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                        class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                         to="/notes/new">New note</RouterLink>
                     <RouterLink v-if="isLoggedIn"
-                        class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                        class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                         to="/signout">Sign Out</RouterLink>
                     <RouterLink v-if="!isLoggedIn"
-                        class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                        class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                         to="/signin">Sign In</RouterLink>
                     <RouterLink v-if="!isLoggedIn"
-                        class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0 md:mx-4 md:my-0"
+                        class="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0 md:mx-4 md:my-0"
                         to="/signup">Sign Up</RouterLink>
-                    <p> {{authStore.username}}</p>
+                    <p v-if="isLoggedIn"
+                        class="my-2 font-extrabold text-gray-700 transition-colors transform dark:text-gray-200 md:mx-4 md:my-0 md:mx-4 md:my-0">
+                        {{ authStore.username }}</p>
                 </div>
             </div>
         </div>
+        <Alert />
     </nav>
 </template>
