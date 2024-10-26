@@ -7,7 +7,6 @@ const notes = ref([]);
 onMounted(async () => {
     try {
         const response = await BACKEND.get('/notes');
-        console.log(response)
         notes.value = response.data;
     } catch (error) {
         console.error('Error fetching jobs', error);

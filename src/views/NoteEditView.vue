@@ -16,7 +16,7 @@ const id = route.params.id;
 
 onMounted(async () => {
     try {
-        const response = await BACKEND.get(`/api/notes/${id}`);
+        const response = await BACKEND.get(`/notes/${id}`);
         note.value = response.data;
     } catch (error) {
         router.push('/')

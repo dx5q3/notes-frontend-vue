@@ -14,7 +14,7 @@ const note = ref({});
 
 onMounted(async () => {
     try {
-        const response = await BACKEND.get(`/api/notes/${id}`);
+        const response = await BACKEND.get(`/notes/${id}`);
         note.value = response.data;
     } catch (error) {
         raiseAlert('error', error.message);

@@ -22,7 +22,7 @@ const saveNote = () => {
 
 const newNote = async () => {
     try {
-        await BACKEND.post('/api/notes', {
+        await BACKEND.post('/notes', {
             'text': props.note.text,
             'title': props.note.title
         });
@@ -34,7 +34,7 @@ const newNote = async () => {
 
 const editNote = async () => {
     try {
-        await BACKEND.patch('/api/notes/' + props.note.id, {
+        await BACKEND.patch('/notes/' + props.note.id, {
             'text': props.note.text,
             'title': props.note.title
         });
@@ -46,7 +46,7 @@ const editNote = async () => {
 
 const deleteNote = async () => {
     try {
-        await BACKEND.delete('/api/notes/' + props.note.id);
+        await BACKEND.delete('/notes/' + props.note.id);
         raiseAlert("success", "Note deleted successfully.");
     } catch (error) {
         raiseAlert("error", error.message);
