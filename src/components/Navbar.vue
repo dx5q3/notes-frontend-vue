@@ -1,19 +1,25 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useAuthStore } from '@/store/auth';
+
+const authStore = useAuthStore();
 
 const isOpen = ref(false);
 
 const isLoggedIn = computed(() => {
-    return localStorage.getItem("token") != null;
+    return authStore.getUser.username != "";
 });
+
+console.log(authStore)
 </script>
 
 <template>
     <nav class="relative bg-white shadow dark:bg-gray-800">
         <div class="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
             <div class="flex items-center justify-between">
-                <p class="text-xl my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200">Notes App</p>
+                <p class="text-xl my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200">Notes
+                    App</p>
                 <div class="flex md:hidden">
                     <button @click="isOpen = !isOpen" type="button"
                         class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
@@ -48,6 +54,7 @@ const isLoggedIn = computed(() => {
                     <RouterLink v-if="!isLoggedIn"
                         class="my-2 text-gray-700 transition-colors duration-300 transform  dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0 md:mx-4 md:my-0"
                         to="/signup">Sign Up</RouterLink>
+                    <p> {{authStore.username}}</p>
                 </div>
             </div>
         </div>

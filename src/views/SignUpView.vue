@@ -1,11 +1,20 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter} from 'vue-router';
+import { useAlertStore } from '@/store/alert';
+
+const router = useRouter();
+const {raiseAlert} = useAlertStore();
+
+const handleSubmit = () => {
+    raiseAlert("success", "Sign up is successfill. Please sign in");
+    router.push('/signin');
+}
 </script>
 
 <template>
     <main class="bg-white dark:bg-gray-900">
         <div class="container flex items-center justify-center min-h-full px-6 mx-auto">
-            <form class="w-full max-w-md">
+            <form class="w-full max-w-md" @submit.prevent="handleSubmit">
                 <h1 class=" text-2xl font-semibold text-gray-800 capitalize sm:text-3xl dark:text-white">Sign Up</h1>
                 <div class="relative flex items-center mt-8">
                     <span class="absolute">
@@ -56,7 +65,7 @@ import { RouterLink } from 'vue-router';
                         placeholder="Repeat password">
                 </div>
                 <div class="mt-6">
-                    <button
+                    <button type="submit"
                         class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                         Sign in
                     </button>
