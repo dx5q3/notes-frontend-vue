@@ -1,13 +1,13 @@
 <script setup>
 import NoteCard from '@/components/NoteCard.vue';
 import { onMounted, ref } from 'vue';
-import axios from 'axios';
-
+import BACKEND from '@/helpers/axiosHelper';
 const notes = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await axios.get('/api/notes');
+        const response = await BACKEND.get('/notes');
+        console.log(response)
         notes.value = response.data;
     } catch (error) {
         console.error('Error fetching jobs', error);

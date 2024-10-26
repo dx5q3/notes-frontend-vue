@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAlertStore } from '@/store/alert';
 import NoteForm from '@/components/NoteForm.vue';
-import axios from 'axios';
+import BACKEND from '@/helpers/axiosHelper';
 
 const route = useRoute();
 const router = useRouter();
@@ -16,7 +16,7 @@ const id = route.params.id;
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`/api/notes/${id}`);
+        const response = await BACKEND.get(`/api/notes/${id}`);
         note.value = response.data;
     } catch (error) {
         router.push('/')

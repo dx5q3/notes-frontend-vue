@@ -1,8 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
 import { useAlertStore } from '@/store/alert';
-
-import axios from 'axios';
+import BACKEND from '@/helpers/axiosHelper';
 
 const { raiseAlert } = useAlertStore();
 
@@ -23,7 +22,7 @@ const saveNote = () => {
 
 const newNote = async () => {
     try {
-        await axios.post('/api/notes', {
+        await BACKEND.post('/api/notes', {
             'text': props.note.text,
             'title': props.note.title
         });
@@ -35,7 +34,7 @@ const newNote = async () => {
 
 const editNote = async () => {
     try {
-        await axios.patch('/api/notes/' + props.note.id, {
+        await BACKEND.patch('/api/notes/' + props.note.id, {
             'text': props.note.text,
             'title': props.note.title
         });
@@ -47,7 +46,7 @@ const editNote = async () => {
 
 const deleteNote = async () => {
     try {
-        await axios.delete('/api/notes/' + props.note.id);
+        await BACKEND.delete('/api/notes/' + props.note.id);
         raiseAlert("success", "Note deleted successfully.");
     } catch (error) {
         raiseAlert("error", error.message);
