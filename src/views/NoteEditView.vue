@@ -3,8 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAlertStore } from '@/store/alert';
 import NoteForm from '@/components/NoteForm.vue';
-import BACKEND from '@/helpers/axiosHelper';
-
+import axios from 'axios';
 const route = useRoute();
 const router = useRouter();
 
@@ -13,10 +12,11 @@ const { raiseAlert } = useAlertStore();
 const note = ref({});
 
 const id = route.params.id;
+const url = import.meta.env.VITE_BACKEND_HOST;
 
 onMounted(async () => {
     try {
-        const response = await BACKEND.get(`/notes/${id}`);
+        const response = await axios.get(`${url}/notes/${id}`);
         note.value = response.data;
     } catch (error) {
         router.push('/')

@@ -9,14 +9,14 @@ import { useAuthStore } from './store/auth';
 const authStore = useAuthStore();
 
 onBeforeMount(() => {
-  if (typeof localStorage.token !== 'undefined') {
-    authStore.setAuth(localStorage.token);
-  }
+    if (typeof localStorage.token !== 'undefined') {
+        authStore.setAuth(localStorage.token);
+    }
 });
 </script>
 
 <template>
-  <Navbar />
-  <RouterView />
-  <Footer />
+    <Navbar />
+    <RouterView />
+    <Footer />
 </template>

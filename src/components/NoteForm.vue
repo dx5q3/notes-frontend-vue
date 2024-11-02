@@ -1,9 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
 import { useAlertStore } from '@/store/alert';
-import BACKEND from '@/helpers/axiosHelper';
-
-const { raiseAlert } = useAlertStore();
 
 const props = defineProps({
     note: {
@@ -16,15 +12,19 @@ const props = defineProps({
     isEditPage: Boolean
 });
 
+const { raiseAlert } = useAlertStore();
+
+const url = import.meta.env.VITE_BACKEND_HOST;
+
 const saveNote = () => {
     props.isEditPage ? editNote() : newNote();
 };
 
 const newNote = async () => {
     try {
-        await BACKEND.post('/notes', {
-            'text': props.note.text,
-            'title': props.note.title
+        await axios.post(`${url}/notes`, {
+            text: props.note.text,
+            title: props.note.title
         });
         raiseAlert("success", "Note added successfully.");
     } catch (error) {
@@ -34,9 +34,9 @@ const newNote = async () => {
 
 const editNote = async () => {
     try {
-        await BACKEND.patch('/notes/' + props.note.id, {
-            'text': props.note.text,
-            'title': props.note.title
+        await axios.patch(`${url}/notes/${props.note.id}`, {
+            text: props.note.text,
+            title: props.note.title
         });
         raiseAlert("success", "Note updated successfully.");
     } catch (error) {
@@ -46,7 +46,7 @@ const editNote = async () => {
 
 const deleteNote = async () => {
     try {
-        await BACKEND.delete('/notes/' + props.note.id);
+        await axios.delete(`${url}/notes/${props.note.id}`);
         raiseAlert("success", "Note deleted successfully.");
     } catch (error) {
         raiseAlert("error", error.message);

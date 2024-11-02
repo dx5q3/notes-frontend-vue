@@ -11,8 +11,6 @@ const isOpen = ref(false);
 const isLoggedIn = computed(() => {
     return authStore.getUser.username != "";
 });
-
-console.log(authStore)
 </script>
 
 <template>
