@@ -2,19 +2,20 @@
 import { ref, onMounted, computed } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { useAlertStore } from '@/store/alert';
-import BACKEND from '@/helpers/axiosHelper';
+import axios from 'axios';
 
 const route = useRoute();
 const router = useRouter();
-
 const { raiseAlert } = useAlertStore();
 
-const id = route.params.id;
 const note = ref({});
+
+const id = route.params.id;
+const url = import.meta.env.VITE_BACKEND_HOST;
 
 onMounted(async () => {
     try {
-        const response = await BACKEND.get(`/notes/${id}`);
+        const response = await axios.get(`${url}/notes/${id}`);
         note.value = response.data;
     } catch (error) {
         raiseAlert('error', error.message);
@@ -33,7 +34,7 @@ const createdAt = computed(() => {
 });
 
 const updatedAt = computed(() => {
-    return NaN;
+    return convertDate(state.note.updatedAt);;
 });
 </script>
 
@@ -58,7 +59,7 @@ const updatedAt = computed(() => {
                     Created at: {{ note.createdAt }}
                 </p>
                 <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                    Updated at {{ note.updatedAt }}:
+                    Updated at {{ note.updatedAt }}
                 </p>
             </div>
         </div>

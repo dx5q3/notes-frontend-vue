@@ -2,15 +2,37 @@
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
+import axios from "axios";
 
 const router = useRouter();
-const authStore = useAuthStore();
+const { setAuth } = useAuthStore();
 
 const email = ref('');
+const password = ref('');
 
-const handleSubmit = () => {
-    authStore.setAuth(email.value);
-    router.push('/');
+const url = import.meta.env.VITE_COGNITO_HOST;
+const clientId = import.meta.env.VITE_COGNITO_CLIENTID;
+
+const handleSubmit = async () => {
+    try {
+        const res = await axios.post(url, {
+            AuthParameters: {
+                USERNAME: email.value,
+                PASSWORD: password.value,
+            },
+            AuthFlow: 'USER_PASSWORD_AUTH',
+            ClientId: clientId,
+        }, {
+            headers: {
+                'Content-Type': 'application/x-amz-json-1.1',
+                'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
+            }
+        });
+        setAuth(res.data.AuthenticationResult.AccessToken);
+        router.push('/');
+    } catch (error) {
+        console.log(error);
+    }
 };
 </script>
 
@@ -40,7 +62,7 @@ const handleSubmit = () => {
                         </svg>
                     </span>
 
-                    <input type="password"
+                    <input type="password" v-model="password"
                         class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         placeholder="Password">
                 </div>
