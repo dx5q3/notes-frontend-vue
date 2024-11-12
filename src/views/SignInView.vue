@@ -2,10 +2,12 @@
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/auth';
+import { useAlertStore } from '@/store/alert'
 import axios from "axios";
 
 const router = useRouter();
 const { setAuth } = useAuthStore();
+const { raiseAlert } = useAlertStore();
 
 const email = ref('');
 const password = ref('');
@@ -28,10 +30,10 @@ const handleSubmit = async () => {
                 'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
             }
         });
-        setAuth(res.data.AuthenticationResult.AccessToken);
+        setAuth(res.data.AuthenticationResult.IdToken);
         router.push('/');
     } catch (error) {
-        console.log(error);
+        raiseAlert("error", error.response.data.message)
     }
 };
 </script>

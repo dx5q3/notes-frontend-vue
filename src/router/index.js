@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NotesView from '@/views/NotesView.vue';
-import SingInView from '@/views/SingInView.vue';
+import SigninView from '@/views/SignInView.vue';
 import SignUpView from '@/views/SignUpView.vue';
 import NoteView from '@/views/NoteView.vue';
 import NoteNewView from '@/views/NoteNewView.vue';
@@ -32,7 +32,7 @@ const router = createRouter({
         {
             path: "/signin",
             name: "signIn",
-            component: SingInView
+            component: SigninView
         },
         {
             path: "/signup",

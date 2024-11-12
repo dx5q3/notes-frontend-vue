@@ -16,7 +16,11 @@ const url = import.meta.env.VITE_BACKEND_HOST;
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`${url}/notes/${id}`);
+        const response = await axios.get(`${url}/notes/${id}`, {
+            headers: {
+                authorization: localStorage.token
+            }
+        });
         note.value = response.data;
     } catch (error) {
         router.push('/')

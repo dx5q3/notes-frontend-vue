@@ -40,7 +40,8 @@ const signUp = async () => {
         isConfirmMode.value = true;
         raiseAlert("success", "Please enter the confirmation code");
     } catch (error) {
-        raiseAlert("error", error.message);
+
+        raiseAlert("error", error.response.data.message)
     }
 }
 
@@ -62,7 +63,6 @@ const confirm = async () => {
         raiseAlert("success", "Sign up successful. Please sign in");
         router.push('/signin');
     } catch (error) {
-        console.log(error);
         raiseAlert("error", error.message);
     }
 }

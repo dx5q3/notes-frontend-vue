@@ -1,5 +1,9 @@
 <script setup>
+import axios from 'axios';
 import { useAlertStore } from '@/store/alert';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
 
 const props = defineProps({
     note: {
@@ -23,10 +27,15 @@ const saveNote = () => {
 const newNote = async () => {
     try {
         await axios.post(`${url}/notes`, {
-            text: props.note.text,
-            title: props.note.title
+            newText: props.note.text,
+            newTitle: props.note.title
+        }, {
+            headers: {
+                authorization: localStorage.token
+            }
         });
         raiseAlert("success", "Note added successfully.");
+        router.push("/");
     } catch (error) {
         raiseAlert("error", error.message);
     }
@@ -35,10 +44,15 @@ const newNote = async () => {
 const editNote = async () => {
     try {
         await axios.patch(`${url}/notes/${props.note.id}`, {
-            text: props.note.text,
-            title: props.note.title
+            newText: props.note.text,
+            newTitle: props.note.title
+        }, {
+            headers: {
+                authorization: localStorage.token
+            }
         });
         raiseAlert("success", "Note updated successfully.");
+        router.go(-1);
     } catch (error) {
         raiseAlert("error", error.message);
     }
@@ -46,8 +60,13 @@ const editNote = async () => {
 
 const deleteNote = async () => {
     try {
-        await axios.delete(`${url}/notes/${props.note.id}`);
+        await axios.delete(`${url}/notes/${props.note.id}`, {
+            headers: {
+                authorization: localStorage.token
+            }
+        });
         raiseAlert("success", "Note deleted successfully.");
+        router.push("/");
     } catch (error) {
         raiseAlert("error", error.message);
     }

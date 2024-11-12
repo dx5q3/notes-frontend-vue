@@ -18,12 +18,16 @@ const truncTitle = computed(() => {
 const truncText = computed(() => {
     return props.note.text.split(" ").slice(0, 15).join(" ") + "...";
 });
+
+const createdAt = computed(() => {
+    return (new Date(props.note.createdAt)).toUTCString()
+});
 </script>
 
 <template>
     <div class="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div class="flex items-center justify-between">
-            <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ note.createdAt }}</span>
+            <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ createdAt }}</span>
         </div>
         <div class="mt-2">
             <p class="text-xl font-bold text-gray-700 dark:text-white">{{ truncTitle }}</p>
@@ -36,7 +40,7 @@ const truncText = computed(() => {
 
             <div class="flex items-center">
                 <p class="font-bold text-gray-700 dark:text-gray-200">
-                    {{ note.author }}
+                    {{ note.userName }}
                 </p>
             </div>
         </div>
