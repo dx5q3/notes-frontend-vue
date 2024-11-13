@@ -17,9 +17,9 @@ jobs:
 
       - name: Install Dependencies and Build
         env:
-          VITE_BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-          VITE_COGNITO_HOST: ${{ secrets.COGNITO_HOST }}
-          VITE_COGNITO_CLIENTID: ${{ secrets.COGNITO_CLIENTID }}
+          VITE_BACKEND_HOST: ${{ secrets.VITE_BACKEND_HOST }}
+          VITE_COGNITO_HOST: ${{ secrets.VITE_COGNITO_HOST }}
+          VITE_COGNITO_CLIENTID: ${{ secrets.VITE_COGNITO_CLIENTID }}
         run: |
           npm install
           npm run build
