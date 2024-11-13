@@ -32,4 +32,5 @@ coverage
 testing/notes.json
 .vite
 
-.env
+.env*
+!.env
